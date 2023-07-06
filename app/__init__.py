@@ -6,10 +6,10 @@ def create_app():
     app = Flask(__name__) # the name of the file
     app.config['SECRET_KEY'] = 'dasncuas sdanodmas'
     
-    from .views import views
+    from .views import main
     from .auth import auth
 
-    app.register_blueprint(views, urlprefix="/")
+    app.register_blueprint(main, urlprefix="/")
     app.register_blueprint(auth, urlprefix="/")
     
     return app

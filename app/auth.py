@@ -13,3 +13,4 @@ def logout():
 @auth.route("/sign-up")
 def sign_up():
     return "<h1>Sign Up</h1>"
+
