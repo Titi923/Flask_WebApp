@@ -8,6 +8,9 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.home'))
+    
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
@@ -22,7 +25,7 @@ def login():
         else:
             flash("This account does not exist with this email.", category='error')
         
-    return render_template("login.html", isLoggedIn=False)
+    return render_template("login.html", user=current_user)
 
 @auth.route('/logout')
 @login_required
@@ -32,6 +35,9 @@ def logout():
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def signup():
+    if current_user.is_authenticated:
+        return redirect('/')
+    
     if request.method == 'POST':
         email = request.form.get('email')
         first_name = request.form.get('firstName')
@@ -58,4 +64,4 @@ def signup():
             login_user(new_user, remember=True)
             return redirect(url_for('main.home'))
             
-    return render_template("signUp.html", methods=['GET', 'POST'])
+    return render_template("signUp.html", user=current_user)
