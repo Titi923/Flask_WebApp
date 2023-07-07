@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
+from flask_login import login_user, login_required, logout_user, current_user
 
 auth = Blueprint('auth', __name__)
 
@@ -15,6 +16,7 @@ def login():
         if user:
             if check_password_hash(user.password, password):
                 flash("Hello " + user.first_name + " you just logged in successfuly", category='success')
+                login_user(user, remember=True)
                 return redirect(url_for('main.home'))
             flash("Incorrect password, try again!", category='error')
         else:
@@ -23,8 +25,10 @@ def login():
     return render_template("login.html", isLoggedIn=False)
 
 @auth.route('/logout')
+@login_required
 def logout():
-    return "<h1>Logged out</h1>"
+    logout_user()
+    return redirect(url_for('auth.login'))
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def signup():
@@ -41,7 +45,7 @@ def signup():
         elif len(email) < 4:
             flash('Email must be greater than 3 characters.', category='error')
         elif len(first_name) < 2:
-            flash('First name must be greater than 1 character.', category='error')
+            flash('First name must be greater than 1 characters.', category='error')
         elif password1 != password2:
             flash('Passwords don\'t match.', category='error')
         elif len(password1) < 7:
@@ -50,7 +54,8 @@ def signup():
             new_user = User(email=email, first_name=first_name, password=generate_password_hash(password1, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
-            flash('Account created!', category='success')
+            flash("Hello " + new_user.first_name +"! Account created successfuly!", category='success')
+            login_user(new_user, remember=True)
             return redirect(url_for('main.home'))
             
     return render_template("signUp.html", methods=['GET', 'POST'])
