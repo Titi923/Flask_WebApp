@@ -1,0 +1,22 @@
+{% extends "base.html" %} {% block title %}Document Management{% endblock %}
+
+{% block content %}
+    <h1>Select a templater</h1>
+    <form method="GET" enctype=multipart/form-data>
+            {% for image in images %}
+            <div class="dropdown">
+                <img class="btn dropdown-toggle" src="{{ url_for('static', filename='images/' + image.filename) }}" style="max-width: 100px; max-height: 100px;" alt="dropdown image" data-toggle="dropdown" class="img-responsive">
+                <ul class="dropdown-menu">
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="#">Log Out</a></li>
+                    <li><a href="#">Dropdown menu 3</a></li>
+                </ul>
+            </div>
+            {% endfor %}
+        <button type="submit" class="btn btn-primary">Primary</button>
+    </form>
+    {% for image in images %}
+        <img style="max-width: 300px;" src="{{ url_for('static', filename='images/' + image.filename) }}" alt="User Photo">
+    {% endfor %}
+    
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %} {% block title %}Login{% endblock %}
+{% block content %}
+<form method="POST" action="/update-note/{{note_to_update.id}}">
+    <h1>Update text</h1>
+    <textarea name="note_data" type="text" class="form-control" rows="10">{{note_to_update.data}}</textarea>
+    <button type="submit" class="btn btn-primary mt-2">Update Note</button>
+    <h3>Last updated: {{ note_to_update.date }}</h3>
+</form>
+{% endblock %}
