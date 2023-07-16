@@ -32,13 +32,17 @@ def home():
 
 
     if request.method == 'POST':
-
         upload()
     images = Image.query.filter_by(user_id=current_user.id).all()
 
     return render_template('home.html', user=current_user, images=images)
-
-
+    
+@main.route('/pdf-edit', methods=['GET', 'POST'])
+@login_required
+def pdfedit():
+    pass
+    # return render_template('pdfEdit/pdfedit.html', user=current_user)
+   
     
 # UPDATE Note
 @main.route('/update-note/<int:id>', methods=['GET', 'POST'])

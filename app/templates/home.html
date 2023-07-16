@@ -1,8 +1,11 @@
+<!-- python -m http.server 8080 -->
+
 {% extends "base.html" %} {% block title %}Document Management{% endblock %}
 
 {% block content %}
 <h1>This is the home page</h1>
 <!-- IS WORKING -->
+<a href="http://127.0.0.1:8080/app/templates/pdfEdit/pdfedit.html">GO HERE</a>
 <form method="POST" enctype=multipart/form-data>
     <div class="mb-3">
         <label for="formFile" class="form-label">Upload your letterhead photo</label>
@@ -10,7 +13,6 @@
     </div>
     <button type="submit" class="btn btn-primary">Upload</button>
 </form>
-
 <h2>Notes</h2>
 <div class="border p-2" id="notes">
     {% for note in user.notes %}
@@ -33,10 +35,10 @@
     </div>
 </form>
 {% for image in user.images %}
-        <div>
-            <img style="max-width: 300px;" src="{{ url_for('static', filename='images/' + image.filename) }}" alt="User Photo">
-            <a href="/delete-image/{{ image.id }}" class="btn btn-danger">Delete</a>
-        </div>
-    {% endfor %}
+<div>
+    <img style="max-width: 300px;" src="{{ url_for('static', filename='images/' + image.filename) }}" alt="User Photo">
+    <a href="/delete-image/{{ image.id }}" class="btn btn-danger">Delete</a>
+</div>
+{% endfor %}
 
 {% endblock %}

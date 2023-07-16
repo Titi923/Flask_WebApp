@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="pspdfkit" style="height: 100vh;"></div>
+    
+    
+    <script src="./node_modules/pspdfkit/dist/pspdfkit.js"></script>
+    <script>
+        PSPDFKit.load({
+            container: "#pspdfkit",
+            document: "contract.pdf", // Add the path to your document here.
+            autoSaveMode: PSPDFKit.AutoSaveMode.INTELLIGENT
+        })
+        .then(function(instance) {
+            console.log("PSPDFKit loaded", instance);
+        })
+        .catch(function(error) {
+            console.error(error.message);
+        });
+
+        instance.addEventListener("document.saveStateChange", (event) => {
+            console.log(`Save state changed: ${event.hasUnsavedChanges}`);
+        });
+        instance.addEventListener("document.saveStateChange", (event) => {
+            console.log(`Save state changed: ${event.hasUnsavedChanges}`);
+        });
+    </script>
+</body>
+</html>
